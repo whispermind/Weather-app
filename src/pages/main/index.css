@@ -1,0 +1,7 @@
+h1 {
+  text-transform: capitalize;
+}
+
+h1 > span {
+  font-weight: 400;
+}

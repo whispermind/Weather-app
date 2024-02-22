@@ -1,0 +1,27 @@
+.trip-card {
+  width: 200px;
+  font-size: 0.8rem;
+  border: 2px solid #80808030;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.trip-card__cover {
+  width: 100%;
+}
+
+.trip-card__description {
+  padding : 10px
+}
+
+.trip-card__description > h3, p {
+  margin: 5px 0;
+}
+
+.trip-card__description > p {
+  color: #808080;
+}
+
+.trip-card_selected {
+  border: 2px solid rgba(38, 142, 216, 0.624);
+}

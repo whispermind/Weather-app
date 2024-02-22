@@ -1,0 +1,35 @@
+.trips__slider {
+  display: flex;
+}
+
+.trips__slider-overlay {
+  display: flex;
+  width: 700px;
+  overflow: hidden;
+}
+
+.trips__cards-container {
+  display: flex;
+  column-gap: 30px;
+  transition: transform 1s ease-in-out;
+}
+
+.trips__add-trip-button {
+  width: 200px;
+  max-height: 150px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.trips__add-trip-button:hover {
+  background-color: rgba(128, 128, 128, 0.455);
+}
+
+.trips__controls {
+  margin: 10px;
+}
+
+.trips__form-modal {
+  
+}

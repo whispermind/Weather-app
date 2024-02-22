@@ -1,0 +1,27 @@
+.trips-form {
+  width: 50vw;
+  padding: 50px;
+  background-color: #00000092;
+  color: rgb(255, 255, 255);
+}
+
+.trips-form > label {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  margin-top: 20px;
+}
+
+.trips-form__controls {
+  margin-top: 20px;
+}
+
+.trips-form__close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.trips-form select {
+  text-transform: capitalize;
+}
