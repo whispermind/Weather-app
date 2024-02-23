@@ -1,7 +1,7 @@
 import { FormEvent, useReducer, useCallback, ChangeEvent } from "react";
 
 import { TripsFormStateReducer, initialState, TAction } from "./reducer";
-import { cities } from "../mockedData"
+import { useAppContext } from "../../../app/context";
 
 import "./index.css"
 
@@ -18,7 +18,8 @@ export interface ITripsForm {
 
 export function TripsForm({ onClose, onSubmit }: ITripsFormProps) {
   const [{ maxDepartureDate, minDepartureDate, maxArrivalDate, minArrivalDate, arrivalDate, departureDate }, dispatch] = useReducer(TripsFormStateReducer, initialState);
-
+  const { cities } = useAppContext();
+  
   const options = cities.map((city, index) => <option key={index}>{city}</option>);
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {

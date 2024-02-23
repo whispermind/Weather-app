@@ -2,7 +2,7 @@ import { useMemo, useState, useCallback, FormEvent, useRef, useEffect } from "re
 
 import { TripCard } from "./TripCard"
 import { TripsForm } from "./TripsForm"
-import { trips, covers } from "./mockedData"
+import { useAppContext } from "../../app/context"
 
 import type { ITripsForm } from "./TripsForm"
 
@@ -11,15 +11,18 @@ import "./index.css"
 export function Trips() {
   const [selected, setSelected] = useState(1);
   const [translateX, setTranslateX] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
   const [cardWidth, setCardWidth] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+  
+  const context = useAppContext();
+  const { trips, covers, setContext } = context;
 
   const ref = useRef<HTMLDivElement>(null);
   
   const cards = useMemo(() => 
   trips.map((cardData) => 
     <TripCard  ref={ref} key={cardData.id} {...cardData} selected={ cardData.id === selected } onClick={() => setSelected(cardData.id)} />),
-  [selected]);
+  [selected, trips]);
 
   const styles = {
     transform: `translateX(-${translateX}px)`
@@ -33,7 +36,7 @@ export function Trips() {
       return
     }
     setTranslateX(translateX + cardWidth + sliderGap);
-  }, [translateX, cardWidth]);
+  }, [translateX, cardWidth, trips.length]);
   const prevListener = useCallback(() => {
     if(!translateX) {
       return
@@ -53,10 +56,10 @@ export function Trips() {
     const location = formCity.value as keyof typeof covers;
     const arrival = formArrival.value.split("").reverse().join("");
     const departure = formDeparture.value.split("").reverse().join("");
-
-    trips.push({ location, arrival, departure, id: Math.random() * 100, coverImage: covers[location] });
+    const trip = { location, arrival, departure, id: Math.random() * 100, coverImage: covers[location] };
+    setContext && setContext({...context, trips: [...context.trips, trip]})
     closeModal();
-  }, [closeModal]);
+  }, [closeModal, covers, setContext, context]);
 
   const modalHidden = modalOpen ? "" : "trips__form-modal_hidden" ;
 

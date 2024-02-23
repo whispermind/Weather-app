@@ -26,5 +26,6 @@
 }
 
 .trips-form__submit-button {
-  color: rgb(67, 67, 195);
+  background-color: rgb(67, 67, 195);
+  color: #ffffff;
 }
