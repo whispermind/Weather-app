@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import "./index.css"
 
 interface ITripCardProps {
@@ -9,11 +10,11 @@ interface ITripCardProps {
   onClick?: () => void
 }
 
-export function TripCard({ coverImage, location, arrival, departure, selected, onClick }: ITripCardProps) {
+export const TripCard = forwardRef<HTMLDivElement, ITripCardProps>(function({ coverImage, location, arrival, departure, selected, onClick }: ITripCardProps, ref) {
   const isSelected = selected ? "trip-card_selected" : "";
 
   return (
-    <div className={`trip-card ${isSelected}`} onClick={onClick} >
+    <div ref={ref} className={`trip-card ${isSelected}`} onClick={onClick} >
       <img className="trip-card__cover" src={ coverImage } alt="city" />
       <div className="trip-card__description">
         <h3>{ location }</h3>
@@ -21,4 +22,4 @@ export function TripCard({ coverImage, location, arrival, departure, selected, o
       </div>
     </div>
   )
-}
+})

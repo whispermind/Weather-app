@@ -1,5 +1,4 @@
 .trips-form {
-  width: 50vw;
   padding: 50px;
   background-color: #00000092;
   color: rgb(255, 255, 255);
@@ -24,4 +23,8 @@
 
 .trips-form select {
   text-transform: capitalize;
+}
+
+.trips-form__submit-button {
+  color: rgb(67, 67, 195);
 }

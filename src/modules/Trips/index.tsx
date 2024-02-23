@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback, FormEvent } from "react"
+import { useMemo, useState, useCallback, FormEvent, useRef, useEffect } from "react"
 
 import { TripCard } from "./TripCard"
 import { TripsForm } from "./TripsForm"
@@ -12,16 +12,19 @@ export function Trips() {
   const [selected, setSelected] = useState(1);
   const [translateX, setTranslateX] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
+  const [cardWidth, setCardWidth] = useState(0);
+
+  const ref = useRef<HTMLDivElement>(null);
   
   const cards = useMemo(() => 
   trips.map((cardData) => 
-    <TripCard  key={cardData.id} {...cardData} selected={ cardData.id === selected } onClick={() => setSelected(cardData.id)} />),
+    <TripCard  ref={ref} key={cardData.id} {...cardData} selected={ cardData.id === selected } onClick={() => setSelected(cardData.id)} />),
   [selected]);
 
   const styles = {
     transform: `translateX(-${translateX}px)`
   }
-  const cardWidth = 204;
+
   const sliderGap = 30;
   const cardsPerView = 3;
 
@@ -30,15 +33,20 @@ export function Trips() {
       return
     }
     setTranslateX(translateX + cardWidth + sliderGap);
-  }, [translateX]);
+  }, [translateX, cardWidth]);
   const prevListener = useCallback(() => {
     if(!translateX) {
       return
     }
     setTranslateX(translateX - cardWidth - sliderGap);
-  }, [translateX]);
+  }, [translateX, cardWidth]);
+
+  const calculateRectWidth = useCallback(() => {
+    setCardWidth(ref.current?.getBoundingClientRect().width || 0);
+  }, []);
 
   const closeModal = useCallback(() => setModalOpen(false), []);
+  const openModal = useCallback(() => setModalOpen(true), []);
   const onSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
     const { city: formCity, arrival: formArrival, departure: formDeparture } = e.target as typeof e.target & Record<keyof ITripsForm, { value: string }>; 
@@ -50,6 +58,13 @@ export function Trips() {
     closeModal();
   }, [closeModal]);
 
+  const modalHidden = modalOpen ? "" : "trips__form-modal_hidden" ;
+
+  useEffect(() => {
+    window.addEventListener("resize", calculateRectWidth);
+    calculateRectWidth();
+    return () => window.removeEventListener("resize", calculateRectWidth);
+  }, [calculateRectWidth]);
 
   return (
     <>
@@ -60,14 +75,14 @@ export function Trips() {
               { cards }
             </div>
           </div>
-            <button className="trips__add-trip-button">Add trip</button>
+            <button onClick={openModal} className="trips__add-trip-button">Add trip</button>
         </div>
         <div className="trips__controls">
           <button className="trips__prev-button" onClick={prevListener}>prev</button>
           <button className="trips__next-button" onClick={nextListener}>next</button>
         </div>
       </div>
-      <div className="trips__form-modal">
+      <div className={`trips__form-modal ${modalHidden}`}>
         <TripsForm onClose={closeModal} onSubmit={onSubmit} />
       </div>
     </>
