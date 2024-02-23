@@ -1,5 +1,10 @@
+.trips {
+  min-height: 300px;
+}
+
 .trips__slider {
   display: flex;
+  margin-top: 20px;
 }
 
 .trips__slider-overlay {

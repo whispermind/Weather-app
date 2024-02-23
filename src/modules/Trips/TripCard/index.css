@@ -4,6 +4,7 @@
   border: 2px solid #80808030;
   flex-shrink: 0;
   cursor: pointer;
+  text-transform: capitalize;
 }
 
 .trip-card__cover {
