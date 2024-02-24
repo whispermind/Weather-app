@@ -26,21 +26,19 @@ export const initialState = {
 
 export function TripsFormStateReducer(state: ITripsFormState, { type, value }: TAction) {
   const mutated = structuredClone(state);
-  const dateGap = 14;
+  const dateGap = 15;
   const date = new Date(value);
-  const formatted = dateFormatter(date);
 
   if(type === "arrival") {
-    
-    mutated.arrivalDate = formatted;
-    mutated.minDepartureDate = formatted
+    mutated.arrivalDate = value;
+    mutated.minDepartureDate = value;
     date.setDate(date.getDate() + dateGap)
-    mutated.maxDepartureDate = dateFormatter(date);
+    mutated.maxDepartureDate = value;
   }
 
   if(type === "departure") {
-    mutated.departureDate = formatted;
-    mutated.maxArrivalDate = formatted;
+    mutated.departureDate = value;
+    mutated.maxArrivalDate = value;
     date.setDate(date.getDate() - dateGap)
     mutated.minArrivalDate = date.getTime() > Date.now() ? dateFormatter(date) : dateFormatter(new Date());
   }

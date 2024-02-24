@@ -2,6 +2,10 @@
   min-height: 300px;
 }
 
+.trips__filter {
+  padding: 5px;
+}
+
 .trips__slider {
   display: flex;
   margin-top: 20px;
@@ -32,7 +36,7 @@
 }
 
 .trips__controls {
-  margin: 10px;
+  margin-top: 10px;
 }
 
 .trips__form-modal {

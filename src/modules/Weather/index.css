@@ -1,0 +1,16 @@
+.trip-weather__list {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 50px;
+  row-gap: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.trip-weather__day-caption {
+  width: 12%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  justify-content: space-between;
+}

@@ -10,22 +10,21 @@ import "./index.css"
 
 export function Trips() {
   const [filter, setFilter] = useState("");
-  const [selected, setSelected] = useState(1);
   const [translateX, setTranslateX] = useState(0);
   const [cardWidth, setCardWidth] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   
   const context = useAppContext();
-  const { trips, covers, setContext } = context;
+  const { trips, covers, setContext, selected } = context;
 
   const ref = useRef<HTMLDivElement>(null);
   
   const cards = useMemo(() => {
   const filtered = filter ? trips.filter((trip) => trip.location.toLowerCase().startsWith(filter.toLowerCase())) : trips;
   return filtered.map((cardData) => {
-    return <TripCard  ref={ref} key={cardData.id} {...cardData} selected={ cardData.id === selected } onClick={() => setSelected(cardData.id)} /> });
+    return <TripCard  ref={ref} key={cardData.id} {...cardData} selected={ cardData.id === selected } onClick={() => setContext && setContext({...context, selected: cardData.id})} /> });
   },
-  [selected, trips, filter]);
+  [selected, trips, filter, context, setContext]);
 
   const styles = {
     transform: `translateX(-${translateX}px)`
@@ -59,9 +58,7 @@ export function Trips() {
     e.preventDefault();
     const { city: formCity, arrival: formArrival, departure: formDeparture } = e.target as typeof e.target & Record<keyof ITripsForm, { value: string }>; 
     const location = formCity.value as keyof typeof covers;
-    const arrival = new Date(formArrival.value).toLocaleDateString("ru-RU");
-    const departure = new Date(formDeparture.value).toLocaleDateString("ru-RU");
-    const trip = { location, arrival, departure, id: Math.random() * 100, coverImage: covers[location] };
+    const trip = { location, arrival: formArrival.value, departure: formDeparture.value, id: Math.random() * 100, coverImage: covers[location] };
 
     setContext && setContext({...context, trips: [...context.trips, trip]})
     closeModal();
