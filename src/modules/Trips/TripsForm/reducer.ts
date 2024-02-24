@@ -33,7 +33,7 @@ export function TripsFormStateReducer(state: ITripsFormState, { type, value }: T
     mutated.arrivalDate = value;
     mutated.minDepartureDate = value;
     date.setDate(date.getDate() + dateGap)
-    mutated.maxDepartureDate = value;
+    mutated.maxDepartureDate = dateFormatter(date);
   }
 
   if(type === "departure") {
