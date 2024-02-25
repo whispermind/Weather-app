@@ -1,18 +1,20 @@
+import { useMemo } from "react";
+
 import { useGetWeather } from "../../hooks/useGetWeather"
+import { dayFormatter } from "../../services/dayFormatter";
 
 import "./index.css"
 
 export function Weather() {
   const { isError, weather, isLoaded } = useGetWeather(true);
-
-  const weatherList = weather && weather.days.map(({ datetime, feelslikemax, feelslikemin, icon  }, index) => {
+  const weatherList = useMemo(() => weather?.days.map(({ datetime, tempmax, tempmin, icon  }, index) => {
     return (
     <div key={index} className="trip-weather__day-caption">
-      <div>{ new Date(datetime).toLocaleDateString("en-US", { weekday: "long" })}</div>
+      <div>{ dayFormatter(datetime) }</div>
       <img src={`./assets/weathericons/svg/1st Set - Color/${icon}.svg`} alt="weather icon" />
-      <div>{`${feelslikemax}°C/${feelslikemin}°C`}</div>
+      <div>{`${tempmax}°C/${tempmin}°C`}</div>
     </div>)
-  });
+  }), [weather]);
 
   return (
     <div className="trip-weather">

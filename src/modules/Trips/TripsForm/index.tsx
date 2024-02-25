@@ -1,4 +1,4 @@
-import { FormEvent, useReducer, useCallback, ChangeEvent } from "react";
+import { FormEvent, useReducer, useCallback, ChangeEvent, useMemo } from "react";
 
 import { TripsFormStateReducer, initialState, TAction } from "./reducer";
 import { useAppContext } from "../../../app/context";
@@ -20,7 +20,7 @@ export function TripsForm({ onClose, onSubmit }: ITripsFormProps) {
   const [{ maxDepartureDate, minDepartureDate, maxArrivalDate, minArrivalDate, arrivalDate, departureDate }, dispatch] = useReducer(TripsFormStateReducer, initialState);
   const { cities } = useAppContext();
   
-  const options = cities.map((city, index) => <option key={index}>{city}</option>);
+  const options = useMemo(() => cities.map((city, index) => <option key={index}>{city}</option>), [cities]);
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target as typeof e.target & { value: string, name: string };

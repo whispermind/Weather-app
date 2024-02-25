@@ -20,9 +20,11 @@ export function Trips() {
   const ref = useRef<HTMLDivElement>(null);
   
   const cards = useMemo(() => {
-  const filtered = filter ? trips.filter((trip) => trip.location.toLowerCase().startsWith(filter.toLowerCase())) : trips;
-  return filtered.map((cardData) => {
-    return <TripCard  ref={ref} key={cardData.id} {...cardData} selected={ cardData.id === selected } onClick={() => setContext && setContext({...context, selected: cardData.id})} /> });
+  const filtered = (filter ? trips.filter((trip) => trip.location.toLowerCase().startsWith(filter.toLowerCase())) : trips)
+                    .sort((a, b) => new Date(a.arrival).getTime() - new Date(b.arrival).getTime());
+                    
+  return filtered.map((cardData, index) => {
+    return <TripCard  ref={ref} key={index} {...cardData} selected={ index === selected } onClick={() => setContext && setContext({...context, selected: index})} /> });
   },
   [selected, trips, filter, context, setContext]);
 

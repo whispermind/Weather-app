@@ -1,0 +1,9 @@
+.App {
+  display: flex;
+  column-gap: 30px;
+}
+
+aside {
+  flex-grow: 1;
+  height: 600px;
+}

@@ -1,5 +1,4 @@
-import { Trips } from "../../modules/Trips"
-import { Weather } from "../../modules/Weather"
+import { Trips, Weather, Countdown } from "../../modules"
 
 import "./index.css"
 
@@ -13,7 +12,9 @@ export function MainPage() {
       <Weather />
     </div>
   </main>
-  <aside></aside>
+  <aside>
+    <Countdown />
+  </aside>
   </>
   )
 }
