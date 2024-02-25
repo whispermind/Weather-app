@@ -10,15 +10,16 @@ let timer: NodeJS.Timer;
 
 export function Countdown() {
   const [timestamp, setTimestamp] = useState(0);
-  const { isLoaded, isError, isLoading, weather } = useGetWeather();
+  const { isLoaded, isError, weather } = useGetWeather();
   const { selected, trips } = useAppContext();
 
   const weatherData = weather?.days[0];
 
   useEffect(() => {
+    const offset = - new Date().getTimezoneOffset() * 60 * 1000;
     const arrivalTimestamp = new Date(trips[selected].arrival).getTime();
     const intervalCb = () => {
-      setTimestamp(arrivalTimestamp - Date.now());
+      setTimestamp(arrivalTimestamp - Date.now() - offset);
       timer = setTimeout(intervalCb, delay);
     };
     const delay = 1000;
@@ -54,7 +55,7 @@ export function Countdown() {
         </div> 
       }
       {
-        isError && "ERROR MESSAGE THERE COULD BE UR ADVERTISMENT"
+        isError && "ERROR MESSAGE, THERE COULD BE UR ADVERTISMENT"
       }
     </>
     )
