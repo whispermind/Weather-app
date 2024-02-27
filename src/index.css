@@ -1,4 +1,13 @@
-.App {
+header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+header > div {
+  max-width: 300px;
+}
+
+.app-content {
   display: flex;
   column-gap: 30px;
 }

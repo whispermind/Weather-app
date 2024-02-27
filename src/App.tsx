@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 import { MainPage } from "./pages/main/main";
 import { AppContext, defaultAppContext, IAppContext } from "./app/context";
+import { Auth } from "./modules";
 
 import "./index.css";
 
@@ -19,7 +21,14 @@ function App() {
   return (
     <div className="App">
       <AppContext.Provider value={{...appContext, setContext: setAppContext }}>
-        <MainPage />
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_OAUTH_KEY || ""}> 
+        <header>
+          <Auth />
+        </header>
+        <div className="app-content">
+          <MainPage />
+        </div>
+        </GoogleOAuthProvider>
       </AppContext.Provider>
     </div>
   );
